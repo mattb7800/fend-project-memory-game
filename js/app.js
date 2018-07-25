@@ -1,14 +1,18 @@
 /*
  * Create a list that holds all of your cards
 This list holds all the card types defined in the HTML
+Need 2 of each type of card.
  */
-const cardsAll = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o"
-"fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube",
-"fa fa-cube", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle",
-"fa fa-bomb", "fa fa-bomb"];
+const myCards = ["fa fa-diamond", "fa fa-paper-plane-o", "fa-fa-anchor", "fa fa-bolt",
+"fa fa-cube", "fa-fa-anchor", "fa fa-leaf", "fa fa-bicycle","fa fa-diamond", "fa fa-bomb",
+"fa fa-leaf", "fa fa-bomb", "f fa-bolt", "fa fa-bicycle", "fa fa-paper-plane-o", "fa fa-cube"];
 
+for (var i = 0; i<16; i++) {
+  generateCard(card) {
+    return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
+  }
 
-
+}
 
 
 /*
@@ -45,19 +49,30 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+function startGame() {
+  startClock();
+  const cards = document.querySelector('.deck');
+  const newDeck = shuffle(myCards).map(function(card) {
+    return generateCard(card);
+  });
+
+
+}
+
+
 
 
 
 
 
 /* count moves */
-const totalMoves = 0;
+let totalMoves = 0;
 const moveCount = document.querySelector('.moves');
 const levelStars = document.querySelector('.stars');
 
 function moves () {
   totalMoves++;
-  moveCount. innerHTML = totalMoves;
+  moveCount.innerHTML = totalMoves;
 
   /*star ratings
   min number of moves = 8 */
@@ -66,20 +81,14 @@ function moves () {
       document.getElementById('SuperStar').style.color = "white";
   } else if (totalMoves <= 30) {
     document.getElementById('champ').style.color = "white"
+  } else {
+    document.getElementById('tryHarder').style.color = "white";
   }
 
 };
 
-
-
-
-
-
-
-
-
-
 /*set up for game clock*/
+
 const gameClock = document.querySelector('.clock');
 let minutes = document.getElementById('mins');
 let seconds = document.getElementById('secs');
