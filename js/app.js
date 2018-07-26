@@ -8,7 +8,7 @@ const myCards = ["fa fa-diamond", "fa fa-paper-plane-o", "fa-fa-anchor", "fa fa-
 "fa fa-leaf", "fa fa-bomb", "f fa-bolt", "fa fa-bicycle", "fa fa-paper-plane-o", "fa fa-cube"];
 
 for (var i = 0; i<16; i++) {
-  generateCard(card) {
+  function generateCard(card) {
     return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
   }
 
@@ -56,13 +56,60 @@ function startGame() {
     return generateCard(card);
   });
 
+ deck.innerHTML = newDeck.join('');
+
+ let cardSet = document.querySelectorAll('.card');
+ let openCards = [];
+
+/*Found good info on using classList property at
+https://www.w3schools.com/jsref/prop_element_classlist.asp */
+
+cardSet.forEach(function(card) {
+  card.addEventListener('click', function(event) {
+    if (
+      !card.classList.contains('open') &&
+      !card.classList.contains('show') &&
+      !card.classList.contains('match')
+    ) {
+      openCards.push(card);
+      card.classList.add('open', 'show');
+
+      if (openCards.length == 2) {
+        moves();
+
+        /*selected cards match = no */
+        if (openCards[0].dataset.card != openCards[1].dataset.card) {
+          setTimeout(function() {
+            openCards.map(function(card) {
+              card.classList.remove('open', 'show');
+            });
+            openCards = [];
+          }, 1100);
+          else {
+
+         openCards[0].classList.add('match');
+         openCards[0].classList.add('open');
+         openCards[0].classList.add('show');
+
+         openCards[1].classList.add('match');
+         openCards[1].classList.add('open');
+         openCards[1].classList.add('show');
+
+         openCards = [];
+
+          }
+        }
+
+      }
+
+    }
+
+
+  })
+})
+
 
 }
-
-
-
-
-
 
 
 /* count moves */
@@ -80,19 +127,29 @@ function moves () {
   if (totalMoves > 10  && moves <= 20) {
       document.getElementById('SuperStar').style.color = "white";
   } else if (totalMoves <= 30) {
-    document.getElementById('champ').style.color = "white"
+    document.getElementById('champ').style.color = "white";
   } else {
     document.getElementById('tryHarder').style.color = "white";
   }
 
 };
 
+
+let allCardsMatch = document.getElementsByClassName('match');
+funcion endGame () {
+  if (allCardsMatch === 16) {
+
+  }
+}
+
+
+
 /*set up for game clock*/
 
-const gameClock = document.querySelector('.clock');
+let gameClock = document.querySelector('.clock');
 let minutes = document.getElementById('mins');
 let seconds = document.getElementById('secs');
-let sixtySeconds = 0;
+
 
 /* start clock */
 /*info on setInterval method found at
@@ -100,7 +157,7 @@ https://www.w3schools.com/jsref/met_win_setinterval.asp */
 
 function startClock() {
     elapsedTime = setInterval(function() {
-      seconds.innerText++
+      seconds.innerText++;
       if (seconds.innerText == 60) {
         minutes.innerText++;
         seconds.innerText = 0;
