@@ -1,17 +1,13 @@
-/*
- * Create a list that holds all of your cards
+/*Create a list that holds all of your cards
 This list holds all the card types defined in the HTML
-Need 2 of each type of card.
- */
-const myCards = ["fa fa-diamond", "fa fa-paper-plane-o", "fa-fa-anchor", "fa fa-bolt",
+Need 2 of each type of card.*/
+const cards = ["fa fa-diamond", "fa fa-paper-plane-o", "fa-fa-anchor", "fa fa-bolt",
 "fa fa-cube", "fa-fa-anchor", "fa fa-leaf", "fa fa-bicycle","fa fa-diamond", "fa fa-bomb",
 "fa fa-leaf", "fa fa-bomb", "f fa-bolt", "fa fa-bicycle", "fa fa-paper-plane-o", "fa fa-cube"];
 
-for (var i = 0; i<16; i++) {
+
   function generateCard(card) {
     return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
-  }
-
 }
 
 
@@ -49,23 +45,23 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-function startGame() {
-  startClock();
-  const cards = document.querySelector('.deck');
-  const newDeck = shuffle(myCards).map(function(card) {
+function initGame() {
+  startTimer();
+  let deck = document.querySelector('.deck');
+  let cardHTML = shuffle(myCards).map(function(card) {
     return generateCard(card);
   });
 
- deck.innerHTML = newDeck.join('');
+ deck.innerHTML = cardHTML.join('');
 
- let cardSet = document.querySelectorAll('.card');
+ let allCards = document.querySelectorAll('.card');
  let openCards = [];
 
 /*Found good info on using classList property at
 https://www.w3schools.com/jsref/prop_element_classlist.asp */
 
-cardSet.forEach(function(card) {
-  card.addEventListener('click', function(event) {
+allCards.forEach(function(card) {
+  card.addEventListener('click', function(e) {
     if (
       !card.classList.contains('open') &&
       !card.classList.contains('show') &&
@@ -75,17 +71,10 @@ cardSet.forEach(function(card) {
       card.classList.add('open', 'show');
 
       if (openCards.length == 2) {
-        moves();
+        movesCount();
 
-        /*selected cards match = no */
-        if (openCards[0].dataset.card != openCards[1].dataset.card) {
-          setTimeout(function() {
-            openCards.map(function(card) {
-              card.classList.remove('open', 'show');
-            });
-            openCards = [];
-          }, 1100);
-          else {
+        /*selected cards match = yes */
+        if (openCards[0].dataset.card == openCards[1].dataset.card) {
 
          openCards[0].classList.add('match');
          openCards[0].classList.add('open');
@@ -97,78 +86,104 @@ cardSet.forEach(function(card) {
 
          openCards = [];
 
-          }
-        }
+         winGame();
 
+       } else {
+         setTimeout(function() {
+           openCards.forEach(function(card) {
+             card.classList.remove('open', 'show');
+           });
+           openCards = [];
+         }, 1100);
       }
-
+     }
     }
-
-
-  })
-})
-
-
-}
+  });
+});
 
 
 /* count moves */
-let totalMoves = 0;
-const moveCount = document.querySelector('.moves');
-const levelStars = document.querySelector('.stars');
+let moves = 0;
+let moveCounter = document.querySelector('.moves');
+let stars = document.querySelector('stars');
+let one = document.querySelector('.one');
+let two = document.querySelector('two');
 
-function moves () {
-  totalMoves++;
-  moveCount.innerHTML = totalMoves;
+function moveCount() {
+  moves++;
+  moveCounter.innerHTML = moves;
 
   /*star ratings
   min number of moves = 8 */
 
-  if (totalMoves > 10  && moves <= 20) {
-      document.getElementById('SuperStar').style.color = "white";
-  } else if (totalMoves <= 30) {
-    document.getElementById('champ').style.color = "white";
-  } else {
-    document.getElementById('tryHarder').style.color = "white";
-  }
-
-};
-
-
-let allCardsMatch = document.getElementsByClassName('match');
-funcion endGame () {
-  if (allCardsMatch === 16) {
-
+  if (moves > 10  && moves <= 20) {
+      one.style.visibility = "none";
+  } else if (moves > 30){
+    two.style.visibility = "none";
   }
 }
-
-
 
 /*set up for game clock*/
-
-let gameClock = document.querySelector('.clock');
-let minutes = document.getElementById('mins');
-let seconds = document.getElementById('secs');
-
-
-/* start clock */
-/*info on setInterval method found at
+/* info on setInterval method found at
 https://www.w3schools.com/jsref/met_win_setinterval.asp */
 
-function startClock() {
-    elapsedTime = setInterval(function() {
-      seconds.innerText++;
-      if (seconds.innerText == 60) {
-        minutes.innerText++;
-        seconds.innerText = 0;
-      }
-    }, 1000);
+let timer = document.querySelector('.timer');
+var timing;
+let second = 0;
+timing = window.setInterval(function() {
+  timer.innerHTML = second + " seconds";
+  second++;
+  }, 1000);
 }
+
 
 /*info on clearInterval method found at
 https://www.w3schools.com/jsref/met_win_clearinterval.asp*/
-function restartGameClock() {
-  clearInterval(gameCLock);
+
+function resetTimer() {
+  clearInterval(timining);
 }
 
-document.querySelector(".restart").addEventListener('click', restartGameClock);
+document.querySelector(".restart").addEventListener('click', resetTimer);
+
+/* JS for Modal */
+/* modal info found at https://www.w3schools.com/w3css/w3css_modal.asp */
+
+let matchedCards = document.getElmentsByClassName('match');
+let modal = document.querySelector('.modal');
+let finalTime = document.querySelector('finalTime');
+let finalRating = document.querySelector('finalRating');
+let finalMoves =  document.querySelector('finalMoves');
+
+function winGame() {
+  if (matchedCards === 16) {
+    modal.style.display = "block";
+    finalRating.innerHTML = stars.innerHTML;
+    finalMoves.innerHTML = moveCounter.innerHTML;
+    finalTime.innerHTML = timer.innerHTML;
+  }
+}
+
+let span = document.getElmentsByClassName("close")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+
+
+  };
+
+
+document.querySelector('.button').addEventListener('click', playAgain);
+document.querySelector('.button').addEventListener('click', resetTimer);
+document.querySelector('.restart').addEventListener('click', playAgain);
+
+function playAgain() {
+  modal.style.display = "none";
+  moveCounter.innerHTML = 0;
+  one.style.visibility = 'visible';
+  two.style.visibility = 'visible';
+}
+
+
+
+initGame();

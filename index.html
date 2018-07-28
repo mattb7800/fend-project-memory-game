@@ -17,16 +17,16 @@
 
         <section class="score-panel">
         	<ul class="stars">
-        		<li id = "superStar"><i class="fa fa-star"></i></li>
-        		<li id ="champ"><i class="fa fa-star"></i></li>
-        		<li id ="tryHarder"><i class="fa fa-star"></i></li>
+        		<li><i class="fa fa-star one"></i></li>
+        		<li id><i class="fa fa-star two"></i></li>
+        		<li id><i class="fa fa-star"></i></li>
         	</ul>
 
-        	<span class="moves">3</span> Moves
-          <span class = "clock"><span id = "min"></span>mins:<span id = "sec"></span>secs:</span>
-            <div class="restart">
+        	<span class="moves">0</span> Moves
+          <span class = "timer"><span id = "sec">Elapased Time: </span>secs</span>
+          <div class="restart">
         		<i class="fa fa-repeat"></i>
-        	 </div>
+        	</div>
         </section>
 
         <ul class="deck">
@@ -80,6 +80,24 @@
             </li>
         </ul>
     </div>
+
+    <div class="restart" onclick="initGame()">
+       <i class="fa fa-repeat"></i>
+    </div>
+<!--add modal-->
+<!--modal info found at https://www.w3schools.com/w3css/w3css_modal.asp-->
+  <div class = modal">
+    <div class = "modal-content">
+      <span class = "close">&times;</span>
+      <p><strong>Congratulations!!</strong></p>
+      <p>Elapased Time: <span class = "totatTime"></span></p>
+      <p>Total Moves: <span class = "totalMoves"></span></p>
+      <p>Rating: <span class = "finalRating"></span></p>
+      <button class="button" onClick="initGame()">New Game?</button>
+  </div>
+
+
+
 
     <script src="js/app.js"></script>
 </body>
