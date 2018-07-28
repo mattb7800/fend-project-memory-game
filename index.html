@@ -23,14 +23,14 @@
         	</ul>
 
         	<span class="moves">0</span> Moves
-          <span class = "timer"><span id = "sec">Elapased Time: </span>secs</span>
-          <div class="restart">
+          <span class = "timer">Elapsed Time:</span>
+          <div class="restart" onclick="initGame() ">
         		<i class="fa fa-repeat"></i>
         	</div>
         </section>
 
         <ul class="deck">
-            <li class="card">
+           <li class="card">
                 <i class="fa fa-diamond"></i>
             </li>
             <li class="card">
@@ -81,19 +81,17 @@
         </ul>
     </div>
 
-    <div class="restart" onclick="initGame()">
-       <i class="fa fa-repeat"></i>
-    </div>
+
 <!--add modal-->
 <!--modal info found at https://www.w3schools.com/w3css/w3css_modal.asp-->
-  <div class = modal">
-    <div class = "modal-content">
+  <div class = "modal">
+    <div class = "modal-info">
       <span class = "close">&times;</span>
       <p><strong>Congratulations!!</strong></p>
-      <p>Elapased Time: <span class = "totatTime"></span></p>
+      <p>Elapased Time: <span class = "totalTime"></span></p>
       <p>Total Moves: <span class = "totalMoves"></span></p>
-      <p>Rating: <span class = "finalRating"></span></p>
-      <button class="button" onClick="initGame()">New Game?</button>
+      <p>Rating: <span class = "starlRating"></span></p>
+      <button class="button" onclick="initGame()">New Game?</button>
   </div>
 
 

@@ -1,11 +1,12 @@
 /*Create a list that holds all of your cards
 This list holds all the card types defined in the HTML
 Need 2 of each type of card.*/
-const cards = ["fa fa-diamond", "fa fa-paper-plane-o", "fa-fa-anchor", "fa fa-bolt",
-"fa fa-cube", "fa-fa-anchor", "fa fa-leaf", "fa fa-bicycle","fa fa-diamond", "fa fa-bomb",
-"fa fa-leaf", "fa fa-bomb", "f fa-bolt", "fa fa-bicycle", "fa fa-paper-plane-o", "fa fa-cube"];
+const cards = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bolt",
+"fa fa-cube", "fa fa-anchor", "fa fa-leaf", "fa fa-bicycle","fa fa-diamond",
+"fa fa-bomb", "fa fa-leaf", "fa fa-bomb", "fa fa-bolt", "fa fa-bicycle",
+"fa fa-paper-plane-o", "fa fa-cube"];
 
-
+/* Returns HTML for cards */
   function generateCard(card) {
     return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
@@ -48,7 +49,7 @@ function shuffle(array) {
 function initGame() {
   startTimer();
   let deck = document.querySelector('.deck');
-  let cardHTML = shuffle(myCards).map(function(card) {
+  let cardHTML = shuffle(cards).map(function(card) {
     return generateCard(card);
   });
 
@@ -57,7 +58,7 @@ function initGame() {
  let allCards = document.querySelectorAll('.card');
  let openCards = [];
 
-/*Found good info on using classList property at
+/*Info on using classList property found at
 https://www.w3schools.com/jsref/prop_element_classlist.asp */
 
 allCards.forEach(function(card) {
@@ -71,9 +72,12 @@ allCards.forEach(function(card) {
       card.classList.add('open', 'show');
 
       if (openCards.length == 2) {
-        movesCount();
+        moveCount();
+/* Info on using dataset property found at
+https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset */
 
         /*selected cards match = yes */
+
         if (openCards[0].dataset.card == openCards[1].dataset.card) {
 
          openCards[0].classList.add('match');
@@ -100,14 +104,14 @@ allCards.forEach(function(card) {
     }
   });
 });
-
+}
 
 /* count moves */
 let moves = 0;
 let moveCounter = document.querySelector('.moves');
-let stars = document.querySelector('stars');
+let stars = document.querySelector('.stars');
 let one = document.querySelector('.one');
-let two = document.querySelector('two');
+let two = document.querySelector('.two');
 
 function moveCount() {
   moves++;
@@ -117,9 +121,9 @@ function moveCount() {
   min number of moves = 8 */
 
   if (moves > 10  && moves <= 20) {
-      one.style.visibility = "none";
+      one.style.display = "none";
   } else if (moves > 30){
-    two.style.visibility = "none";
+    two.style.display = "none";
   }
 }
 
@@ -130,18 +134,19 @@ https://www.w3schools.com/jsref/met_win_setinterval.asp */
 let timer = document.querySelector('.timer');
 var timing;
 let second = 0;
-timing = window.setInterval(function() {
+
+function startTimer() {
+  timing = window.setInterval(function() {
   timer.innerHTML = second + " seconds";
   second++;
   }, 1000);
 }
 
-
 /*info on clearInterval method found at
 https://www.w3schools.com/jsref/met_win_clearinterval.asp*/
 
 function resetTimer() {
-  clearInterval(timining);
+  clearInterval(timing);
 }
 
 document.querySelector(".restart").addEventListener('click', resetTimer);
@@ -149,29 +154,27 @@ document.querySelector(".restart").addEventListener('click', resetTimer);
 /* JS for Modal */
 /* modal info found at https://www.w3schools.com/w3css/w3css_modal.asp */
 
-let matchedCards = document.getElmentsByClassName('match');
+let matchedCards = document.getElementsByClassName('match');
 let modal = document.querySelector('.modal');
-let finalTime = document.querySelector('finalTime');
-let finalRating = document.querySelector('finalRating');
-let finalMoves =  document.querySelector('finalMoves');
+let totalTime = document.querySelector('totalTime');
+let starRating = document.querySelector('starRating');
+let totalMoves =  document.querySelector('totalMoves');
 
 function winGame() {
   if (matchedCards === 16) {
     modal.style.display = "block";
-    finalRating.innerHTML = stars.innerHTML;
-    finalMoves.innerHTML = moveCounter.innerHTML;
-    finalTime.innerHTML = timer.innerHTML;
+    starRating.innerHTML = stars.innerHTML;
+    totalMoves.innerHTML = moveCounter.innerHTML;
+    totalTime.innerHTML = timer.innerHTML;
   }
 }
 
-let span = document.getElmentsByClassName("close")[0];
+let span = document.getElementsByClassName("close")[0];
 
 span.onclick = function() {
     modal.style.display = "none";
 
-
   };
-
 
 document.querySelector('.button').addEventListener('click', playAgain);
 document.querySelector('.button').addEventListener('click', resetTimer);
@@ -183,7 +186,5 @@ function playAgain() {
   one.style.visibility = 'visible';
   two.style.visibility = 'visible';
 }
-
-
 
 initGame();
