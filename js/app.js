@@ -98,7 +98,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset */
              card.classList.remove('open', 'show');
            });
            openCards = [];
-         }, 1100);
+         }, 700);
       }
      }
     }
@@ -117,13 +117,12 @@ function moveCount() {
   moves++;
   moveCounter.innerHTML = moves;
 
-  /*star ratings
-  min number of moves = 8 */
+  /*star ratings -- min number of moves = 8 */
 
   if (moves > 10  && moves <= 20) {
-      one.style.display = "none";
+      two.style.display = "none";
   } else if (moves > 30){
-    two.style.display = "none";
+    one.style.display = "none";
   }
 }
 
@@ -135,7 +134,9 @@ let timer = document.querySelector('.timer');
 var timing;
 let second = 0;
 
+
 function startTimer() {
+
   timing = window.setInterval(function() {
   timer.innerHTML = second + " seconds";
   second++;
@@ -147,26 +148,35 @@ https://www.w3schools.com/jsref/met_win_clearinterval.asp*/
 
 function resetTimer() {
   clearInterval(timing);
+  second = 0; 
+  timer.innerHTML = 0;
+
+
+  console.log(timer);
+
 }
 
-document.querySelector(".restart").addEventListener('click', resetTimer);
+document.querySelector('.restart').addEventListener('click', resetTimer);
 
 /* JS for Modal */
 /* modal info found at https://www.w3schools.com/w3css/w3css_modal.asp */
 
 let matchedCards = document.getElementsByClassName('match');
 let modal = document.querySelector('.modal');
-let totalTime = document.querySelector('totalTime');
-let starRating = document.querySelector('starRating');
-let totalMoves =  document.querySelector('totalMoves');
+let totalTime = document.querySelector('.totalTime');
+let starRating = document.querySelector('.starRating');
+let totalMoves =  document.querySelector('.totalMoves');
 
 function winGame() {
-  if (matchedCards === 16) {
+  if (matchedCards.length === 16) {
     modal.style.display = "block";
-    starRating.innerHTML = stars.innerHTML;
     totalMoves.innerHTML = moveCounter.innerHTML;
     totalTime.innerHTML = timer.innerHTML;
+    starRating.innerHTML = stars.innerHTML;
+
+
   }
+
 }
 
 let span = document.getElementsByClassName("close")[0];
@@ -175,16 +185,22 @@ span.onclick = function() {
     modal.style.display = "none";
 
   };
-
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+  };
 document.querySelector('.button').addEventListener('click', playAgain);
 document.querySelector('.button').addEventListener('click', resetTimer);
 document.querySelector('.restart').addEventListener('click', playAgain);
 
 function playAgain() {
   modal.style.display = "none";
+  moves = 0;
   moveCounter.innerHTML = 0;
-  one.style.visibility = 'visible';
-  two.style.visibility = 'visible';
+  one.style.display = 'visible';
+  two.style.display = 'visible';
+
 }
 
 initGame();
