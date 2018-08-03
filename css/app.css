@@ -119,7 +119,7 @@ h1 {
 
 /* CSS for Modal */
 /* Rating */
-.finalRating {
+.starRating {
   list-style: none;
   display: inline-flex;
 }

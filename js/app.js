@@ -112,6 +112,7 @@ let moveCounter = document.querySelector('.moves');
 let stars = document.querySelector('.stars');
 let one = document.querySelector('.one');
 let two = document.querySelector('.two');
+let three = document.querySelector('.three');
 
 function moveCount() {
   moves++;
@@ -119,10 +120,10 @@ function moveCount() {
 
   /*star ratings -- min number of moves = 8 */
 
-  if (moves > 10  && moves <= 20) {
-      two.style.display = "none";
-  } else if (moves > 30){
-    one.style.display = "none";
+  if (moves > 10  && moves <= 15) {
+      one.style.display = "none";
+  } else if (moves > 20){
+    two.style.display = "none";
   }
 }
 
@@ -148,7 +149,7 @@ https://www.w3schools.com/jsref/met_win_clearinterval.asp*/
 
 function resetTimer() {
   clearInterval(timing);
-  second = 0; 
+  second = 0;
   timer.innerHTML = 0;
 
 
@@ -180,7 +181,7 @@ function winGame() {
 }
 
 let span = document.getElementsByClassName("close")[0];
-
+// modal will close when x is clicked //
 span.onclick = function() {
     modal.style.display = "none";
 
@@ -198,9 +199,9 @@ function playAgain() {
   modal.style.display = "none";
   moves = 0;
   moveCounter.innerHTML = 0;
-  one.style.display = 'visible';
-  two.style.display = 'visible';
-
+  one.style.display = 'inline-block';
+  two.style.display = 'inline-block';
+  three.style.display = 'inline-block';
 }
 
 initGame();
