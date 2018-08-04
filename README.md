@@ -2,16 +2,20 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
+* [Game Instructions](#instructions)
 * [Contributing](#contributing)
 
-## Instructions
+## Matching Game
+Matching game is a fun interactive game similar to concentration.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+##Installation
 
-To get started, open `js/app.js` and start building out the app's functionality
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## Game Instructions
+Launch the index.html file using either the Chrome or Firefox Browser. The timer will start immediately.
+
+
+
 
 ## Contributing
 

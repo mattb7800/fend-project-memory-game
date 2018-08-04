@@ -153,7 +153,7 @@ function resetTimer() {
   timer.innerHTML = 0;
 
 
-  console.log(timer);
+//  console.log(timer); //
 
 }
 
@@ -186,6 +186,8 @@ span.onclick = function() {
     modal.style.display = "none";
 
   };
+
+//close modal when user clicks outside of modal //
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
