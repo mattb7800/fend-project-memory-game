@@ -8,7 +8,7 @@
 ## Matching Game Description
 Matching game is a fun interactive game similar to concentration.
 
-##Installation
+## Installation
 Clone the GitHub repository
 $ create a directory to install the file `mkdir` yourDirectoryName
 $ cd yourDirectoryName
